@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">HealthMonitor</string>
+    <string name="login">Login</string>
+    <string-array name="days_selector">
+       <item>Last 7 Days</item>
+        <item>Past 30 Days</item>
+    </string-array>
+    <string-array name="resource_selector">
+        <item> Heart Rate</item>
+        <item> Exercise</item>
+    </string-array>
+    <string-array name="navigation_drawer">
+        <item>Measure</item>
+    </string-array>
+</resources>
