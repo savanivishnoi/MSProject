@@ -17,8 +17,9 @@ public class ListNavigationMenus {
     public static ListNavigationMenus mInstance;
     private ListNavigationMenus(){
         MenuModel mmProfile = new MenuModel();
-        mmProfile.id = "Profile";
-        mmProfile.menuItem = "Profile";
+        mmProfile.id = "Account";
+        mmProfile.menuItem = "Account";
+        mmProfile.imageIcon = R.mipmap.ic_account;
        // mmProfile.className = "ProfileFragment.class";
         listDataHeader.add(mmProfile);
 
@@ -40,13 +41,15 @@ public class ListNavigationMenus {
         List<MenuModel> lh =new ArrayList<>();
 
         MenuModel mmEditProfile = new MenuModel();
-        mmEditProfile.menuItem = "Edit Profile";
-        mmEditProfile.id = "Edit Profile";
+        mmEditProfile.menuItem = "Profile";
+        mmEditProfile.id = "Profile";
+        mmEditProfile.imageIcon = R.mipmap.ic_profile;
         lh.add(mmEditProfile);
 
         MenuModel mmRelatives = new MenuModel();
         mmRelatives.menuItem = "Relatives";
         mmRelatives.id = "Relatives";
+        mmRelatives.imageIcon = R.mipmap.ic_relatives;
         lh.add(mmRelatives);
 
 
@@ -78,8 +81,8 @@ public class ListNavigationMenus {
 
 }
 class MenuModel{
-    String id;
-    String menuItem;
-    int imageIcon;
+    String id;//id of menu
+    String menuItem;//description of menu
+    int imageIcon;//image icon
     String className;
 }

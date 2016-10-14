@@ -46,9 +46,10 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         int childCount=0;
-        if(groupPosition!=2)
-        {
-            childCount=this.mListDataChild.get(this.mListDataHeader.get(groupPosition))
+       // if(groupPosition!=2)
+       // {
+            if(this.mListDataChild.get(this.mListDataHeader.get(groupPosition).id)!=null){
+                childCount=this.mListDataChild.get(this.mListDataHeader.get(groupPosition).id)
                     .size();
         }
         return childCount;
@@ -62,9 +63,9 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        Log.d("CHILD",mListDataChild.get(this.mListDataHeader.get(groupPosition))
+        Log.d("CHILD",mListDataChild.get(this.mListDataHeader.get(groupPosition).id)
                 .get(childPosition).toString());
-        return this.mListDataChild.get(this.mListDataHeader.get(groupPosition))
+        return this.mListDataChild.get(this.mListDataHeader.get(groupPosition).id)
                 .get(childPosition);
     }
 
@@ -97,10 +98,12 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter {
         }
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.menu);
-        ImageView headerIcon=    (ImageView)convertView.findViewById(R.id.menu_img);
+        ImageView menuIcon=    (ImageView)convertView.findViewById(R.id.menu_img);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle.menuItem);
-       // headerIcon.setImageDrawable();
+        if(headerTitle.imageIcon != 0) {
+            menuIcon.setImageResource(headerTitle.imageIcon);
+        }
         return convertView;
     }
 
@@ -116,9 +119,11 @@ public class ExpandableListAdapter1 extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.menuChild);
-
+        ImageView menuIcon=    (ImageView)convertView.findViewById(R.id.menu_child_img);
         txtListChild.setText(child.menuItem);
-
+        if(child.imageIcon != 0) {
+            menuIcon.setImageResource(child.imageIcon);
+        }
         return convertView;
     }
 

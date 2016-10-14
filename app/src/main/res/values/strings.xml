@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">HealthMonitor</string>
     <string name="login">Login</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="sex">Sex</string>
+    <string name="dob">Date Of Birth</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="doctorName">Doctor</string>
+    <string name="url">http://ec2-54-149-85-123.us-west-2.compute.amazonaws.com/</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="current">Current</string>
     <string-array name="days_selector">
        <item>Last 7 Days</item>
         <item>Past 30 Days</item>

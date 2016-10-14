@@ -51,6 +51,7 @@ public class TrendsActivity extends AppCompatActivity implements AdapterView.OnI
          graph = (GraphView) findViewById(R.id.graph);
 
 
+
         // viewGraph();
 //        FragmentManager fm = getSupportFragmentManager();
 //        Fragment f = fm.findFragmentById(R.id.graphContainer); //Graph fragment
