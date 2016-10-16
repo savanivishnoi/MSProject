@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="@mipmap/ic_navheader"
+    android:background="@drawable/navdrawer_header"
 
     >
     <TextView
@@ -10,9 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:layout_marginLeft="25dp"
-        android:textColor="@color/white"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Health"
+        android:textSize="20dp"
+        android:text="John Doe"
         />
-
 </LinearLayout>

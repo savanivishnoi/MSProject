@@ -52,34 +52,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         doctor_txt = (TextInputEditText) v.findViewById(R.id.doctor);
 
 
-        lastName_txt.setFocusable(false);
-        firstName_txt.setFocusable(false);
-        sex_txt.setFocusable(false);
-        dob_txt.setFocusable(false);
-        phone_txt.setFocusable(false);
-        email_txt.setFocusable(false);
-        address_txt.setFocusable(false);
-        doctor_txt.setFocusable(false);
+        lastName_txt.setEnabled(false);
+        firstName_txt.setEnabled(false);
+        sex_txt.setEnabled(false);
+        dob_txt.setEnabled(false);
+        phone_txt.setEnabled(false);
+        email_txt.setEnabled(false);
+        address_txt.setEnabled(false);
+        doctor_txt.setEnabled(false);
 
         edit_btn.setOnClickListener(this);
 
-      /*
-        sex_txt
-
-        dob_txt
-        phone_txt
-        email_txt
-        address_txt
-        doctor_txt
-                */
-
-
-        lastName_txt.setText("HElllo");
-        firstName_txt.setText("Savani");
-
-
+        lastName_txt.setText("Doe");
+        firstName_txt.setText("John");
         return v;
-
     }
 
     @Override
@@ -118,20 +104,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 edit_btn.setVisibility(View.INVISIBLE);
                 setHasOptionsMenu(true);
                 setEditable();
-
-
                 break;
-
             }
         }
+    }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.profile));
     }
 
     void setEditable(){
-        phone_txt.setFocusable(true);
-        email_txt.setFocusable(true);
-        address_txt.setFocusable(true);
+        phone_txt.setEnabled(true);
+        email_txt.setEnabled(true);
+        address_txt.setEnabled(true);
     }
-
-
 }

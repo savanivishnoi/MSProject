@@ -21,10 +21,10 @@ import java.util.Arrays;
  * Created by savani on 10/2/16.
  */
 
-public class WearableListenerService1 extends WearableListenerService {
+public class SensorListenerService extends WearableListenerService {
     private LocalDatabase mDBHandler;
-    private static final String TAG = "Wearable Listener";
-    WearableListenerService1(){
+    private static final String TAG = "Sensor Listener";
+    SensorListenerService(){
         mDBHandler = new LocalDatabase(this);
     }
 //    @Override
@@ -63,21 +63,18 @@ public class WearableListenerService1 extends WearableListenerService {
                         DataMapItem.fromDataItem(dataItem).getDataMap()
                 );
             }
-
         }
-
     }
-    void retrieveSensorData(int sensorType, DataMap dataMap){
+
+    void retrieveSensorData(int sensorType, DataMap dataMap) {
         int accuracy = dataMap.getInt(SensorFieldsKeys.ACCURACY);
         long timestamp = dataMap.getLong(SensorFieldsKeys.TIMESTAMP);
         float[] values = dataMap.getFloatArray(SensorFieldsKeys.VALUES);
      //   Toast.makeText(this, sensorType+" "+values[0], Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "Received sensor data " + sensorType + " = " + Arrays.toString(values));
+     //   Log.d(TAG, "Received sensor data " + sensorType + " = " + Arrays.toString(values));
         //add to database
         SensorDataModel sm = new SensorDataModel(sensorType, accuracy, timestamp, values[0]);
         mDBHandler.addEntry(sm);
-
-
     }
 
 //

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthMonitor</string>
+    <string name="app_name">My Health</string>
     <string name="login">Login</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
@@ -15,8 +15,14 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="current">Current</string>
+    <string name="past30">Past 30 Days</string>
+    <string name="week">Last 7 Days</string>
+    <string name="heartrate">Heart Rate</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
     <string-array name="days_selector">
-       <item>Last 7 Days</item>
+        <item>Current</item>
+        <item>Last 7 Days</item>
         <item>Past 30 Days</item>
     </string-array>
     <string-array name="resource_selector">

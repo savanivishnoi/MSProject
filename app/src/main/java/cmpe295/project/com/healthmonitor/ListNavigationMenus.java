@@ -15,11 +15,11 @@ public class ListNavigationMenus {
     private  List<MenuModel> listDataHeader = new ArrayList<>();
     private  HashMap<String, List<MenuModel>> listChild = new HashMap<>();
     public static ListNavigationMenus mInstance;
+
     private ListNavigationMenus(){
         MenuModel mmProfile = new MenuModel();
         mmProfile.id = "Account";
         mmProfile.menuItem = "Account";
-        mmProfile.imageIcon = R.mipmap.ic_account;
        // mmProfile.className = "ProfileFragment.class";
         listDataHeader.add(mmProfile);
 
@@ -38,7 +38,7 @@ public class ListNavigationMenus {
         mmTrends.id = "Trends";
         listDataHeader.add(mmTrends);
 
-        List<MenuModel> lh =new ArrayList<>();
+        List<MenuModel> lh = new ArrayList<>();
 
         MenuModel mmEditProfile = new MenuModel();
         mmEditProfile.menuItem = "Profile";
@@ -52,16 +52,38 @@ public class ListNavigationMenus {
         mmRelatives.imageIcon = R.mipmap.ic_relatives;
         lh.add(mmRelatives);
 
-
         List<MenuModel> lh1 =  new ArrayList<>();
+
         MenuModel mmDiabetes = new MenuModel();
         mmDiabetes.menuItem = "Diabetes";
         mmDiabetes.id = "Diabetes";
         lh1.add(mmDiabetes);
 
+        List<MenuModel> lh2 =  new ArrayList<>();
+
+        MenuModel mmHeartRate = new MenuModel();
+        mmHeartRate.menuItem = "Heart Rate";
+        mmHeartRate.id = "Heart Rate";
+        mmHeartRate.imageIcon = R.mipmap.ic_heartrate;
+        lh2.add(mmHeartRate);
+
+        MenuModel mmDiabetesSub = new MenuModel();
+        mmDiabetesSub.menuItem = "Diabetes";
+        mmDiabetesSub.id = "Diabetes";
+        mmDiabetesSub.imageIcon = R.mipmap.ic_diabetes;
+        lh2.add(mmDiabetesSub);
+
+        MenuModel mmStepCount = new MenuModel();
+        mmStepCount.menuItem = "Step Count";
+        mmStepCount.id = "Step Count";
+        mmStepCount.imageIcon = R.mipmap.ic_stepcount;
+        lh2.add(mmStepCount);
+
         listChild.put(listDataHeader.get(0).id,lh);
         listChild.put(listDataHeader.get(1).id,lh1);
+        listChild.put(listDataHeader.get(3).id,lh2);
     }
+
     public static ListNavigationMenus getInstance(){
         if ( mInstance == null)
         {

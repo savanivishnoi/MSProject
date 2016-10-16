@@ -47,7 +47,7 @@ public class LocalDatabase extends SQLiteOpenHelper{
 
         SQLiteDatabase db1 = this.getWritableDatabase();
         db1.insert(db_name, null, prepareData(sm));
-        Log.d(TAG, "DB inserted");
+     //   Log.d(TAG, "DB inserted");
         db1.close();
     }
 
@@ -62,7 +62,7 @@ public class LocalDatabase extends SQLiteOpenHelper{
                 SensorDataModel sdm = new SensorDataModel();
                 sdm.setAccuracy(cursor.getInt(3));
                 sdm.setValues(cursor.getFloat(2));
-                sdm.setTimestamp(cursor.getInt(0));
+                sdm.setTimestamp(cursor.getLong(0));
                 sdm.setSensorType(cursor.getInt(1));
                 sensors.add(sdm);
             }
@@ -81,13 +81,13 @@ public class LocalDatabase extends SQLiteOpenHelper{
                 SensorDataModel sdm = new SensorDataModel();
                 sdm.setAccuracy(cursor.getInt(3));
                 sdm.setValues(cursor.getFloat(2));
-                sdm.setTimestamp(cursor.getInt(0));
+                sdm.setTimestamp(cursor.getLong(0));
                 sdm.setSensorType(cursor.getInt(1));
                // sensors.add(sdm);
                 return sdm;
 
 
-        }catch (SQLException e){
+        } catch (SQLException e){
             Log.d(TAG, "exception on read"+e);
         }
        return null;

@@ -21,8 +21,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
-import static android.view.Gravity.END;
-
 /**
  * Created by savani on 8/3/16.
  */
@@ -74,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 Log.d(TAG,"drawer closed");
-                actionBar.setTitle("Title");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -104,11 +101,9 @@ public class MainActivity extends AppCompatActivity implements
             public void onDrawerOpened(View drawerView) {
                 Log.d(TAG,"drawer opened");
                 super.onDrawerOpened(drawerView);
-                actionBar.setTitle("drawer");
+                actionBar.setTitle(getString(R.string.app_name));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
-
-
         };
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -182,27 +177,23 @@ public class MainActivity extends AppCompatActivity implements
     void selectItem(String selectedMenuItem){  //for handling menu item sleected in navigation drawer
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
+        Fragment fragment;
+        Log.d(TAG, selectedMenuItem);
         switch (selectedMenuItem) {
-            case ("Notifications"):
-                Log.d(TAG, "Notifications");
-                Fragment fragment = new ProfileFragment();
-
+            case ("Profile"):
+                fragment = new ProfileFragment();
                 ft.replace(R.id.content_frame, fragment);
-
-//                ft.commit();
-
-       //         mDrawerLayout.closeDrawer(expandableList);
+                mDrawerLayout.closeDrawers();
                 break;
-            case("Trends"):
-                Fragment trendsFragment = new GraphFragment();
-                ft.replace(R.id.content_frame, trendsFragment);
-//                ft.commit();
+            case("Heart Rate"):
+                fragment = new HeartRateGraphFragment();
+                ft.replace(R.id.content_frame, fragment);
+                mDrawerLayout.closeDrawers();
                 break;
         }
         ft.commit();
-
-
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
