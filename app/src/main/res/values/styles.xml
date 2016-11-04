@@ -15,5 +15,13 @@
     <style name="MyHealth" parent="Base.Theme.AppCompat.Light.DarkActionBar" >
         <item name="colorAccent">@color/orange</item>
         <item name="colorPrimary">@color/grey</item>
+
     </style>
+    <style name="AlertDialog.AppCompat." parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title" >
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
 </resources>

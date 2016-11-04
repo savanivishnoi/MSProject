@@ -3,7 +3,7 @@
     <string name="login">Login</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
-    <string name="sex">Sex</string>
+    <string name="sex">Gender</string>
     <string name="dob">Date Of Birth</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
@@ -20,6 +20,15 @@
     <string name="heartrate">Heart Rate</string>
     <string name="notifications">Notifications</string>
     <string name="profile">Profile</string>
+    <string name="patient_id">patient_id</string> !--- --!
+    <string name="patient_name">patient_name</string>
+    <string name="subject">Subject:</string>
+    <string name="alert">Alert</string>
+    <string name="notification">Notification</string>
+    <string name="relation">Relation</string>
+    <string name="save">Save</string>
+    <string name="relativeDetails">Relatives Details</string>
+
     <string-array name="days_selector">
         <item>Current</item>
         <item>Last 7 Days</item>

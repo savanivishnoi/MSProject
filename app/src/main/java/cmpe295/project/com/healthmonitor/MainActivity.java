@@ -1,7 +1,9 @@
 package cmpe295.project.com.healthmonitor;
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by savani on 8/3/16.
@@ -38,32 +41,45 @@ public class MainActivity extends AppCompatActivity implements
     private  ExpandableListAdapter mMenuAdapter;
     private  ExpandableListView expandableList;
     private ActionBarDrawerToggle mDrawerToggle;
-     static final String TAG = "Main Activity";
+    static final String TAG = "Main Activity";
+    FragmentManager fm;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.navigationdrawer);
+        FragmentTransaction ft;
+        Fragment fragment;
+        fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+
 
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        String [] listTitles= {"Hello", "How"};
         expandableList = (ExpandableListView)findViewById(R.id.navigation_menu);
        // mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        NavigationView navigationView = (NavigationView)    findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if(navigationView!=null){
             setupDrawerContent(navigationView);
         }
         mMenuAdapter = new ExpandableListAdapter1(this, ListNavigationMenus.getInstance().getMenu(),
                          ListNavigationMenus.getInstance().getChildMenu(), expandableList);
 
+
         // setting list adapter
         expandableList.setAdapter(mMenuAdapter);
         expandableList.setOnItemClickListener(this);
         expandableList.setOnChildClickListener(this);
         expandableList.setOnGroupClickListener(this);
+        fragment = new NotificationsFragment();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
+        mDrawerLayout.closeDrawers();
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.drawer_open, R.string.drawer_close ){
@@ -101,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements
             public void onDrawerOpened(View drawerView) {
                 Log.d(TAG,"drawer opened");
                 super.onDrawerOpened(drawerView);
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences
+                        (getApplicationContext());
+
+                ((TextView) findViewById(R.id.userName)).setText(sp.getString
+                        (getString(R.string.patient_name), "John"));
                 actionBar.setTitle(getString(R.string.app_name));
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
@@ -175,23 +196,45 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     void selectItem(String selectedMenuItem){  //for handling menu item sleected in navigation drawer
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment;
+
         Log.d(TAG, selectedMenuItem);
+        FragmentTransaction ft;
+        Fragment fragment;
         switch (selectedMenuItem) {
             case ("Profile"):
                 fragment = new ProfileFragment();
+                ft = fm.beginTransaction();
                 ft.replace(R.id.content_frame, fragment);
                 mDrawerLayout.closeDrawers();
+                ft.commit();
                 break;
             case("Heart Rate"):
                 fragment = new HeartRateGraphFragment();
+                ft = fm.beginTransaction();
                 ft.replace(R.id.content_frame, fragment);
                 mDrawerLayout.closeDrawers();
+                ft.commit();
+                break;
+            case("Measure"):
+                fragment = new PathTrackerFragment();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                mDrawerLayout.closeDrawers();
+                ft.commit();
+                break;
+            case("Notifications"):
+                fragment = new NotificationsFragment();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
+                break;
+            case("Relatives"):
+                fragment = new RelativesFragment();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.commit();
                 break;
         }
-        ft.commit();
     }
 
     @Override

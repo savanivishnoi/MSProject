@@ -11,7 +11,11 @@ import android.util.Log;
 
 import com.example.SensorFieldsKeys;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by savani on 10/9/16.
@@ -19,7 +23,7 @@ import java.util.ArrayList;
 
 public class LocalDatabase extends SQLiteOpenHelper{
     private static final String db_name = "HealthMonitorData";
-    private static final int db_version = 4;
+    private static final int db_version = 5;
     private static final String TAG= "Local Database";
     LocalDatabase(Context context) {
         super(context, db_name, null, db_version);
@@ -32,8 +36,7 @@ public class LocalDatabase extends SQLiteOpenHelper{
                 "CREATE TABLE " + db_name + "(" +   // id is long timestamp
                         "_id"+" INTEGER PRIMARY KEY, "+
                         SensorFieldsKeys.SENSOR_TYPE+" INTEGER, "+
-                        "Val" + " REAL, "+
-                        SensorFieldsKeys.ACCURACY+ " INTEGER )";  //values r multiple but we enter only first one
+                        "Val" + " TEXT )";  //values r multiple but we enter only first one
         Log.d(TAG, "sql creation query"+SQL_CREATE_ENTRIES);
         try {
             db.execSQL(SQL_CREATE_ENTRIES);
@@ -60,36 +63,75 @@ public class LocalDatabase extends SQLiteOpenHelper{
             Cursor cursor = db.rawQuery(query, null);
             while (cursor.moveToNext()){
                 SensorDataModel sdm = new SensorDataModel();
-                sdm.setAccuracy(cursor.getInt(3));
-                sdm.setValues(cursor.getFloat(2));
+                sdm.setValues(cursor.getString(2));
                 sdm.setTimestamp(cursor.getLong(0));
                 sdm.setSensorType(cursor.getInt(1));
                 sensors.add(sdm);
             }
 
         }catch (SQLException e){
-            Log.d(TAG, "exception on read"+e);
+            Log.e(TAG, "exception on read"+e);
         }
     }
 
-    public SensorDataModel getMRUData(int sensorType){
+    //retrieve data
+    public ArrayList<SensorDataModel> retrieveAllData(int sensorType){
+        ArrayList<SensorDataModel> sensorsData = new ArrayList<>();
+        String query = "SELECT * FROM  "+db_name+" where " + SensorFieldsKeys.SENSOR_TYPE +  " = "+sensorType;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try{
+            Cursor cursor = db.rawQuery(query, null);
+            while (cursor.moveToNext()){
+                JSONObject reading = new JSONObject();
+                reading.put("timestamp",cursor.getLong(0));
+                reading.put("sensorType", cursor.getInt(1) );
+                reading.put("value",cursor.getString(2));
+                Log.d(TAG, cursor.getInt(1) + " "+cursor.getString(2));
+//                SensorDataModel sdm = new SensorDataModel();
+//                sdm.setValues(cursor.getString(2));
+//                sdm.setTimestamp(cursor.getLong(0));
+//                sdm.setSensorType(cursor.getInt(1));
+//                sensorsData.add(sdm);
+            }
+
+        }catch (SQLException e){
+            Log.d(TAG, "exception on read"+e);
+        }catch (JSONException e){
+            Log.d(TAG, "exception in JSON"+e);
+        }
+        return sensorsData;
+    }
+
+    public SensorDataModel getMRUData(int sensorType) throws NoDataException {
         String query = "SELECT * FROM  "+db_name+" where " + SensorFieldsKeys.SENSOR_TYPE +  " = "+sensorType;
         SQLiteDatabase db = this.getWritableDatabase();
         try{
                 Cursor cursor = db.rawQuery(query, null);
+//test code
+//            while (cursor.moveToNext()) {
+//                System.out.println("Time:  "+cursor.getLong(0) + " type: "+ cursor.getInt(1) + " value: "+cursor.getString(2) );
+//            }
+
                 cursor.moveToLast();
+            if(cursor!=null && cursor.getCount()>0) {
+
                 SensorDataModel sdm = new SensorDataModel();
-                sdm.setAccuracy(cursor.getInt(3));
-                sdm.setValues(cursor.getFloat(2));
+                sdm.setValues(cursor.getString(2));
                 sdm.setTimestamp(cursor.getLong(0));
                 sdm.setSensorType(cursor.getInt(1));
-               // sensors.add(sdm);
+                Log.d(TAG, "graph"+cursor.getInt(1) + " " + cursor.getString(2));
+                // sensors.add(sdm);
                 return sdm;
-
+            } else{
+                throw new NoDataException("No data for sensor "+sensorType);
+            }
 
         } catch (SQLException e){
             Log.d(TAG, "exception on read"+e);
         }
+
+
        return null;
     }
 
@@ -108,8 +150,6 @@ public class LocalDatabase extends SQLiteOpenHelper{
         cv.put("_id", sm.getTimestamp());
         cv.put(SensorFieldsKeys.SENSOR_TYPE, sm.getSensorType());
         cv.put("Val", sm.getValues());
-        cv.put(SensorFieldsKeys.ACCURACY, sm.getAccuracy());
-
         return cv;
     }
 

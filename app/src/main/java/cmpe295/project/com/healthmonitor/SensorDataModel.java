@@ -6,13 +6,12 @@ package cmpe295.project.com.healthmonitor;
 
 public class SensorDataModel {
     private int sensorType;
-    private int accuracy;
-    private long timestamp;
-    private float values;
+     private long timestamp;
+    private String values;
 
-    public SensorDataModel(int sensorType, int accuracy, long timestamp, float values) {
+    public SensorDataModel(int sensorType, long timestamp, String values) {
         this.sensorType = sensorType;
-        this.accuracy = accuracy;
+
         this.timestamp = timestamp;
         this.values = values;
     }
@@ -28,13 +27,6 @@ public class SensorDataModel {
         this.sensorType = sensorType;
     }
 
-    public int getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(int accuracy) {
-        this.accuracy = accuracy;
-    }
 
     public long getTimestamp() {
         return timestamp;
@@ -44,11 +36,11 @@ public class SensorDataModel {
         this.timestamp = timestamp;
     }
 
-    public float getValues() {
+    public String getValues() {
         return values;
     }
 
-    public void setValues(float values) {
+    public void setValues(String values) {
         this.values = values;
     }
     //     int sensorType, final int accuracy, final long timestamp,

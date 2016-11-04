@@ -27,24 +27,6 @@ public class SensorListenerService extends WearableListenerService {
     SensorListenerService(){
         mDBHandler = new LocalDatabase(this);
     }
-//    @Override
-//    public void onMessageReceived(MessageEvent messageEvent) {
-//        super.onMessageReceived(messageEvent);
-//
-//        String event = messageEvent.getPath();
-//
-//        Log.d("Listclicked", event);
-//
-//        String [] message = event.split("--");
-//
-////        if (message[0].equals(SERVICE_CALLED_WEAR)) {
-//
-////            startActivity(new Intent((Intent) Listactivity.getInstance().tutorials.get(message[1]))
-////                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-//      //  }
-//        Intent i = new Intent(this, MainActivity.class);
-//            startActivity(i);
-//    }
 
     @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
@@ -73,16 +55,10 @@ public class SensorListenerService extends WearableListenerService {
      //   Toast.makeText(this, sensorType+" "+values[0], Toast.LENGTH_SHORT).show();
      //   Log.d(TAG, "Received sensor data " + sensorType + " = " + Arrays.toString(values));
         //add to database
-        SensorDataModel sm = new SensorDataModel(sensorType, accuracy, timestamp, values[0]);
+
+        SensorDataModel sm = new SensorDataModel(sensorType, timestamp, String.valueOf(values[0]));
+        Log.d(TAG, sensorType + " value "+values[0]);
         mDBHandler.addEntry(sm);
     }
 
-//
-//    @Override
-//    public void onNotificationReceived(zzd zzd) {
-//        super.onNotificationReceived(zzd);
-//        Log.d("Listclicked", "notification recvd");
-//        Intent i = new Intent(this, MainActivity.class);
-//        startActivity(i);
-//    }
 }

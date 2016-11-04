@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 
+import com.example.SensorsTypeInfo;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -136,13 +137,18 @@ public class HeartRateGraphFragment extends Fragment implements AdapterView.OnIt
             mTimer1 = new Runnable() {
                 @Override
                 public void run() {
-                    SensorDataModel sdm = ld.getMRUData(21);
-                    long time = sdm.getTimestamp() - 1476324542;
-                    Log.d(TAG, "in run" + time + " value "+sdm.getValues());
+                    SensorDataModel sdm = null;
+                    try {
+                        sdm = ld.getMRUData(SensorsTypeInfo.TYPE_HEART_RATE);
+
                     currCounter++;
-                    series.appendData(new DataPoint(currCounter, sdm.getValues()), true, 120);
+                    series.appendData(new DataPoint(currCounter,
+                                    Double.parseDouble(sdm.getValues())), true, 120);
                     // Repeat after 1 sec
                     mHandler.postDelayed(this, 1000);
+                    } catch (NoDataException e) {
+                        e.printStackTrace();
+                    }
                 }
             };
             // Schedule for the first time
@@ -182,41 +188,7 @@ public class HeartRateGraphFragment extends Fragment implements AdapterView.OnIt
 
     }
 
-//    void startTimer(){
-//        currCounter = 0;
-//        mTimer = new Timer();
-//        Log.d(TAG, "timer start");
-//        initializeTimerTask();
-//        mTimer.schedule(mTimerTask, 2000, 1000);
-//    }
-//
-//    public void stopTimerTask(){
-//        if(mTimer!=null){
-//            mTimer.cancel();
-//        }
-//    }
-//
-//    public  void initializeTimerTask(){
-//        mTimerTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                System.out.println("Start " + System.currentTimeMillis());
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        SensorDataModel sdm = ld.getMRUData(21);
-//                        long time = sdm.getTimestamp() - 1476324542;
-//                        Log.d(TAG, "in run" + time + " value "+sdm.getValues());
-//                        currCounter++;
-//                        //seriesCurr.appendData(new DataPoint(currCounter, sdm.getValues()), true, 120);
-//                        seriesCurr.appendData(new DataPoint(currCounter, currCounter + 50), false, 120);
-//                    }
-//                });
-//                System.out.println("End " + System.currentTimeMillis());
-//            }
-//        };
-//    }
-//For testing.. random data
+    //For testing.. random data
     private DataPoint[] generateData(int count) {
         DataPoint[] values = new DataPoint[count];
         for (int i=0; i<count; i++) {
